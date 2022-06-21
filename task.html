@@ -22,88 +22,134 @@
       body {
         box-sizing: border-box;
       }
+
       .slidecontainer {
-        width: 100%; /* Width of the outside container */
+        width: 100%;
+        /* Width of the outside container */
       }
 
       /* The slider itself */
       .slider {
-        -webkit-appearance: none; /* Override default CSS styles */
+        -webkit-appearance: none;
+        /* Override default CSS styles */
         appearance: none;
-        width: 100%; /* Full-width */
-        height: 10px; /* Specified height */
-        background: #d3d3d3; /* Grey background */
-        outline: none; /* Remove outline */
-        opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-        -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
+        width: 100%;
+        /* Full-width */
+        height: 10px;
+        /* Specified height */
+        background: #d3d3d3;
+        /* Grey background */
+        outline: none;
+        /* Remove outline */
+        opacity: 0.7;
+        /* Set transparency (for mouse-over effects on hover) */
+        -webkit-transition: 0.2s;
+        /* 0.2 seconds transition on hover */
         transition: opacity 0.2s;
       }
 
       /* Mouse-over effects */
       .slider:hover {
-        opacity: 1; /* Fully shown on mouse-over */
+        opacity: 1;
+        /* Fully shown on mouse-over */
       }
 
       /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
       .slider::-webkit-slider-thumb {
-        -webkit-appearance: none; /* Override default look */
+        -webkit-appearance: none;
+        /* Override default look */
         appearance: none;
-        width: 15px; /* Set a specific slider handle width */
-        height: 15px; /* Slider handle height */
-        background: #04aa6d; /* Green background */
-        cursor: pointer; /* Cursor on hover */
+        width: 15px;
+        /* Set a specific slider handle width */
+        height: 15px;
+        /* Slider handle height */
+        background: #04aa6d;
+        /* Green background */
+        cursor: pointer;
+        /* Cursor on hover */
       }
 
       .slider::-moz-range-thumb {
-        width: 15px; /* Set a specific slider handle width */
-        height: 15px; /* Slider handle height */
-        background: #04aa6d; /* Green background */
-        cursor: pointer; /* Cursor on hover */
+        width: 15px;
+        /* Set a specific slider handle width */
+        height: 15px;
+        /* Slider handle height */
+        background: #04aa6d;
+        /* Green background */
+        cursor: pointer;
+        /* Cursor on hover */
       }
+
       #ftr {
         color: #6c757d;
       }
     </style>
     <title>Projectile Motion Task</title>
   </head>
+
   <body>
     <div class="container-fluid text-center">
-      <h1 style="font-family: 'Sacramento', cursive; font-size: 50px">
-        Projectile motion simulation
-      </h1>
-      <form action="">
-        <div class="slidecontainer d-flex justify-content-around">
-          <div id="velocityInput">
-            <label for="velocityRange" class="form-label"
-              >0 ≤ <span>Initial speed</span> ≤ 50 m/s</label
-            >
-            <input
-              type="range"
-              min="0"
-              max="50"
-              value="25"
-              class="slider"
-              id="velocityRange"
-            />
-            <span id="velocityValue">value</span>
-          </div>
-          <div id="angleInput">
-            <label for="angleRange" class="form-label"
-              >0° ≤ <span> Initial angle </span>≤ 90°</label
-            >
-            <input
-              type="range"
-              min="0"
-              max="90"
-              value="45"
-              class="slider"
-              id="angleRange"
-            />
-            <span id="angleValue">value</span>
-          </div>
+      <div class="mt-3">
+        <h1
+          style="font-family: 'Sacramento', cursive; font-size: 40px"
+          class="display-1"
+        >
+          Projectile motion simulation
+        </h1>
+      </div>
+      <div class="slidecontainer d-flex justify-content-around mt-3">
+        <div class="form-group">
+          <label for="velocityRange" class="form-label"
+            >0 ≤ <span>Initial Speed</span> ≤ 10 m/s</label
+          >
+          <input
+            type="range"
+            min="0"
+            max="10"
+            value="4"
+            class="slider form-control"
+            id="velocityRange"
+          />
+          <span id="velocityValue">value</span>
         </div>
-      </form>
-      <canvas id="canvas" width="600" height="400"
+        <div class="form-group">
+          <label for="angleRange" class="form-label"
+            >0° ≤ <span> Initial Angle </span>≤ 90°</label
+          >
+          <input
+            type="range"
+            min="0"
+            max="90"
+            value="45"
+            class="slider form-control"
+            id="angleRange"
+          />
+          <span id="angleValue">value</span>
+        </div>
+        <div class="form-group">
+          <label for="animationRange" class="form-label"
+            >0 ≤ <span>Animation Speed</span> ≤ 100
+          </label>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value="10"
+            class="slider form-control"
+            id="animationRange"
+          />
+          <span id="animationValue">value</span>
+        </div>
+      </div>
+      <div class="form-group d-flex justify-content-around my-4">
+        <input
+          type="button"
+          class="btn btn-primary"
+          value="Launch 🚀"
+          id="start"
+        />
+      </div>
+      <canvas id="canvas" width="600" height="400" style="border: 1px solid"
         >Your Browser does not support HTML tags</canvas
       >
       <footer
@@ -115,15 +161,17 @@
       </footer>
     </div>
     <script>
-      const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
-
       const velocitySlider = document.getElementById('velocityRange');
       const angleSlider = document.getElementById('angleRange');
+      const animationSlider = document.getElementById('animationRange');
+
       let velocityOutput = document.getElementById('velocityValue');
       let angleOutput = document.getElementById('angleValue');
+      let animationOutput = document.getElementById('animationValue');
+
       angleOutput.innerHTML = angleSlider.value; // Display the default slider value
       velocityOutput.innerHTML = velocitySlider.value;
+      animationOutput.innerHTML = animationSlider.value;
       // Update the current slider value (each time you drag the slider handle)
       angleSlider.oninput = function () {
         angleOutput.innerHTML = this.value;
@@ -131,6 +179,75 @@
       velocitySlider.oninput = function () {
         velocityOutput.innerHTML = this.value;
       };
+      animationSlider.oninput = function () {
+        animationOutput.innerHTML = this.value;
+      };
+
+      const canvas = document.getElementById('canvas');
+      const context = canvas.getContext('2d');
+
+      var Time = 0;
+      //ball coordinates
+      var X0 = 0;
+      var Y0 = canvas.height;
+      //shooting coordinates
+      var X = X0;
+      var Y = Y0;
+      var speed = velocitySlider;
+      var angle = angleSlider;
+
+      var oldTimeStamp = 0.0;
+      var secondsPassed = 0.0;
+      var animationSpeed = animationSlider;
+      var g = 0.05;
+
+      var run = false;
+
+      var start = document.getElementById('start');
+
+      window.onload = init();
+
+      start.addEventListener('click', toggle);
+
+      function toggle() {
+        if (!run) {
+          start.value = 'Stop';
+        } else {
+          start.value = 'Launch';
+          window.location.reload();
+        }
+        run = !run;
+      }
+      function init() {
+        window.requestAnimationFrame(animate);
+      }
+      function animate(timeStamp) {
+        secondsPassed = (timeStamp - oldTimeStamp) / 1000.0;
+        oldTimeStamp = timeStamp;
+        update();
+        draw();
+        window.requestAnimationFrame(animate);
+      }
+      function update() {
+        if (run) {
+          Time += animationSpeed.value * secondsPassed;
+          X =
+            speed.value * Math.cos((-angle.value * Math.PI) / 180.0) * Time +
+            X0;
+          Y =
+            0.5 * g * Time * Time +
+            speed.value * Math.sin((-angle.value * Math.PI) / 180.0) * Time +
+            Y0;
+        }
+      }
+
+      function draw() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.beginPath();
+        context.arc(X, Y, 10, 0, 2 * Math.PI);
+
+        context.fill();
+      }
     </script>
   </body>
 </html>
